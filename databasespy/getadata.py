@@ -1,10 +1,11 @@
 import MySQLdb
 import json
+from datetime import date
 
 from MySQLdb import cursors
 
 # Open database connection
-db = MySQLdb.connect("localhost","root","xxxxx","birthday")
+db = MySQLdb.connect("localhost","root","xxxx","birthday")
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor(cursors.SSCursor)
@@ -25,5 +26,7 @@ print dict_row
 #print d
 for i in range(2):
     print dict_row[i][1]
+    if dict_row[i][1]==date(1990,10,10):
+        print 'today is %s\'s birthday' % dict_row[i][0]
 
 cursor.close()
