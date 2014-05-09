@@ -11,10 +11,8 @@ print today.weekday()
 
 # check a day:
 if today.date()==date(2014,5,4):
-    print 'today is %s' today
+    print 'today is %s' % today
 
 # check today is monday
 if today.weekday()==0:
-   blabla
-
-
+    print 'blabla'
