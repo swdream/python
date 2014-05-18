@@ -15,11 +15,11 @@ Parsing path phụ thuộc vào một sô biến được định nghĩa trong o
       - Os.pardir: thành phần của path, là thư mục chứa filename đó
       - Os.curdir: thành phần của path, là thư mục hiện hành
 
-split(): chuyển path thành hai thành phần riêng biệt, return lại một tupple
-basename(): return lại thành phần thứ 2 của split()
-dirname(): return lại thành phần thứ nhâts của split()
-splitext() làm việc như split() nhưng nó return lại một tupple gồm hai phần, được phân cách bởi extsep
-commonprefix(): nhận một list các path, và return lại phần chung của các path đó
++ split(): chuyển path thành hai thành phần riêng biệt, return lại một tupple
++ basename(): return lại thành phần thứ 2 của split()
++ dirname(): return lại thành phần thứ nhâts của split()
++ splitext() làm việc như split() nhưng nó return lại một tupple gồm hai phần, được phân cách bởi extsep
++ commonprefix(): nhận một list các path, và return lại phần chung của các path đó
 
 
 Building paths
