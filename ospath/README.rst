@@ -28,11 +28,11 @@ Building paths
 + Join(): kết hợp các thành phần path riêng
 + expanduser(): chuyển đổi kí tự ~ thành home directory::
 
-             import os.path
+        import os.path
 
-             for user in [ '', 'dhellmann', 'postgres' ]:
-                 lookup = '~' + user
-                 print lookup, ':', os.path.expanduser(lookup)
+        for user in [ '', 'dhellmann', 'postgres' ]:
+        lookup = '~' + user
+        print lookup, ':', os.path.expanduser(lookup)
 
 kết quả hiển thị::
 
@@ -58,8 +58,25 @@ kết quả hiển thị::
 Chuẩn hóa path
 ---------------
 
-Sử dụng normpath()
-Để convert một filename tương đối thành một file name tuyệt đối, có thể sử dụng abspath()::
++ Sử dụng normpath()::
+
+      import os.path
+
+      for path in [ 'one//two//three',
+                    'one/./two/./three',
+                    'one/../one/two/three',
+                   ]:
+          print path, ':', os.path.normpath(path)
+
+
+Kết quả::
+
+      one//two//three : one/two/three
+      one/./two/./three : one/two/three
+      one/../one/two/three : one/two/three
+
+
++ Để convert một filename tương đối thành một file name tuyệt đối, có thể sử dụng abspath()::
 
       import os.path
 
