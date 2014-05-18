@@ -31,7 +31,7 @@ Building paths
 
              for user in [ '', 'dhellmann', 'postgres' ]:
                  lookup = '~' + user
-                     print lookup, ':', os.path.expanduser(lookup)
+                 print lookup, ':', os.path.expanduser(lookup)
 
 kết quả hiển thị::
         $ python ospath_expanduser.py
