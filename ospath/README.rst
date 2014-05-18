@@ -27,6 +27,7 @@ Building paths
 
 + Join(): kết hợp các thành phần path riêng
 + expanduser(): chuyển đổi kí tự ~ thành home directory::
+
              import os.path
 
              for user in [ '', 'dhellmann', 'postgres' ]:
@@ -34,6 +35,7 @@ Building paths
                  print lookup, ':', os.path.expanduser(lookup)
 
 kết quả hiển thị::
+
         $ python ospath_expanduser.py
 
         ~ : /Users/dhellmann
