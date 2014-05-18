@@ -78,6 +78,7 @@ kết quả::
 File times
 -------------------
 Os.path cũng có thể được dùng để đưa ra thông tin về file khi nó kết hợp với time module::
+
       import os.path
       import time
 
