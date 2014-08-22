@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 username = "ngtthanh1010@gmail.com"
-password = "thanhtrang1010"
+password = "xxxxxxx"
 
 msg = MIMEMultipart('relate')
 
