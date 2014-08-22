@@ -1,69 +1,95 @@
 import smtplib
 import logging
-import time
 
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
 logging.basicConfig(level=logging.DEBUG)
-my_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-def send_mail(efrom, eto, subject, body, filename):
-    msgid = time.time()
-    time_str = time.strftime('%Y-%m-%d %H:%M:%S',
-                             time.localtime(msgid))
+username = "ngtthanh1010@gmail.com"
+password = "thanhtrang1010"
 
-    username = "ngtthanh1010"
-    password = "xxxxx"
-    body = body
-    #textfile = "textattach.txt"
-    imfile   = "imattach.png"
- 
-    msg = MIMEMultipart('relate')
-    msg["From"]    = efrom
-    msg["To"]      = eto
+msg = MIMEMultipart('relate')
+
+
+def attach_text_file(filename):
+    try:
+        logger.info('openning file %s' % filename)
+        with open(filename, 'rb') as ftext:
+            msgtext = MIMEText(ftext.read(), 'text')
+            msgtext.add_header("Content-ID", "<text1>")
+            msgtext.add_header("Content-Disposition",
+                               "attachment", filename=filename)
+            msgtext.add_header("Content-Disposition",
+                               "inline", filename=filename)
+            msg.attach(msgtext)
+    except Exception as e:
+        logger.error(e, exc_info=True)
+
+
+def attach_img(img):
+    try:
+        logger.info('openning file %s' % img)
+        with open(img, 'rb') as fimage:
+            msgimg = MIMEImage(fimage.read(), 'png')
+            msgimg.add_header("Content-ID", "<image1>")
+            msgimg.add_header("Content-Disposition", "attachment",
+                              filename=img)
+            msgimg.add_header("Content-Disposition", "inline",
+                              filename=img)
+            msg.attach(msgimg)
+    except Exception as e:
+        logger.error(e, exc_info=True)
+
+
+def send_mail(rctps, subject, body, textfile=None, img=None):
+    str_all_mails = ', '.join(rctps) 
+
+    if textfile is None and img is None:
+        return None
+
+    time_str  = str(datetime.now())
+    
+    msg["From"]    = 'ngtthanh1010@gmail.com'
+    msg["To"]      = str_all_mails
     msg["Subject"] = subject
-    msgtalk = MIMEText(body, 'plain')
- 
-    #ftext = open(textfile, 'rb')
-    #msgtext = MIMEText(ftext.read(), 'text')
-    #msgtext.add_header("Content-ID", "<text1>")
-    #msgtext.add_header("Content-Disposition",
-    #                   "attachment", filename=textfile)
-    #msgtext.add_header("Content-Disposition",
-    #                   "inline", filename=textfile)
+    body = MIMEText(body, 'plain')
 
-    fimage = open(filename, 'rb')
-    msgim = MIMEImage(fimage.read(), 'png')
-    msgim.add_header("Content-ID", "<image1>")
-    msgim.add_header("Content-Disposition", "attachment",
-                     filename=filename)
-    msgim.add_header("Content-Disposition", "inline",
-                     filename=filename)
-    msg.attach(msgtalk)
-    #msg.attach(msgtext)
-    msg.attach(msgim)
+    if img is not None and textfile is not None:
+        attach_text_file(textfile)
+        attach_img(img)
+
+    if img is None:
+        attach_text_file(textfile)
+
+    if textfile is None:
+        attach_img(img)
+
+    msg.attach(body)
 
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
-        #server.ehlo()
         server.starttls()
-        #server.ehlo()
-        my_logger.info('%s login on mail server' % time_str )
+        logger.info('%s login on mail server' % time_str )
         server.login(username, password)
-        my_logger.info('%s logged on mail server' % time_str )
-        my_logger.info('%s sending mail to %s' % (time_str, eto ))
-        server.sendmail(efrom, eto, msg.as_string())
-        my_logger.info ('%s sent mail sucessful' % time_str)
+        logger.info('%s logged on mail server' % time_str )
+        logger.info('%s sending mail to %s' % (time_str, str_all_mails))
+        server.sendmail(username, rctps, msg.as_string())
+        logger.info ('%s sent mail sucessful' % time_str)
         server.quit()
     except Exception as e:
-        my_logger.error(e, exc_info=True)
+        logger.error(e, exc_info=True)
+
 
 if __name__ == '__main__':
-    efrom = "ngtthanh1010@gmail.com"
-    eto   = "xxxxx"
+    rctps = ["ngtthanh1010@gmail.com"]
     subject = 'Test'
     body  = "My test email"
-    filename = "xxxxx"
-    send_mail(efrom, eto, subject, body, filename)
+    filename = "hehe.txt"
+    imgfile ="Screenshot from 2014-07-11 09:29:20.png"
+    send_mail(rctps, subject, body, textfile=filename)
+#    send_mail(rctps, subject, body, textfile=None, img=imgfile)
+#    send_mail(rctps, subject, body, textfile=filename, img=imgfile)
