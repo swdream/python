@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 username = "ngtthanh1010@gmail.com"
-password = "thanhtrang1010"
+password = "xxxxxxx"
 
 msg = MIMEMultipart('relate')
 
@@ -46,13 +46,13 @@ def attach_img(img):
 
 
 def send_mail(rctps, subject, body, textfile=None, img=None):
-    str_all_mails = ', '.join(rctps) 
+    str_all_mails = ', '.join(rctps)
 
     if textfile is None and img is None:
         return None
 
     time_str  = str(datetime.now())
-    
+
     msg["From"]    = 'ngtthanh1010@gmail.com'
     msg["To"]      = str_all_mails
     msg["Subject"] = subject
